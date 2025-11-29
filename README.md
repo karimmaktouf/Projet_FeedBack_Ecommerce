@@ -260,15 +260,6 @@ npm test
 
 Ce projet est à usage éducatif.
 
-## 👥 Contribution
-
-Les contributions sont les bienvenues ! Veuillez :
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Commit vos changements (`git commit -m 'Add AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
-
 ## 📧 Contact
 
 Pour toute question, ouvrez une issue sur GitHub.
