@@ -6,14 +6,11 @@ import uuid
 from datetime import datetime
 from faker import Faker
 from confluent_kafka import Producer
+from products import PRODUCTS
+from config import config
 
 # ================= CONFIGURATION =================
-# Configuration Kafka
-KAFKA_BOOTSTRAP = 'pkc-921jm.us-east-2.aws.confluent.cloud:9092'
-KAFKA_KEY = 'T7W7OZPRNTET7UDB'
-KAFKA_SECRET = 'cflt2cZvShkkU07aKn3IwI5MJZAUDEL4pTY9cA/wBiNYwqQVsXE2kwPxcCiMzTrg'
-
-TOPIC_NAME = 'customer_feedback'
+# Configuration depuis .env via config.py
 NUM_MESSAGES = 2000  # Nombre d'avis à générer
 # =================================================
 
@@ -23,17 +20,7 @@ fake = Faker('fr_FR')
 DATE_DEBUT = datetime(2025, 10, 27)
 DATE_FIN = datetime(2025, 11, 27)
 
-PRODUCTS = [
-    ("Smartphone Galaxy X", "Electronics"), ("Laptop Pro 15", "Electronics"), 
-    ("Casque NoiseCancel", "Electronics"), ("Chaussures Running", "Fashion"), 
-    ("Jean Vintage", "Fashion"), ("Montre Connectée", "Electronics"), 
-    ("Machine Espresso", "Home"), ("Robot Cuisine", "Home"),
-    ("Télévision 4K", "Electronics"), ("Console de Jeux", "Electronics"),
-    ("Cafetière", "Home"), ("Mixeur", "Home"), ("Aspirateur", "Home"),
-    ("Sac à dos", "Fashion"), ("Lunettes de soleil", "Fashion"),
-    ("Clavier Mécanique", "Electronics"), ("Souris Gaming", "Electronics"),
-    ("Écouteurs Bluetooth", "Electronics"), ("Chemise", "Fashion"), ("Pantalon", "Fashion")
-]
+# PRODUCTS importé depuis products.py (20 produits centralisés)
 
 TEMPLATES_NEGATIF = [
     "La livraison de mon {product} a pris trop de temps.",
@@ -108,7 +95,8 @@ def generate_dated_feedback():
         "category": prod_cat,
         "rating": rating,
         "sentiment": sentiment,
-        "text": review_text
+        "text": review_text,
+        "source": "data_generator"  # Identifie les données générées vs soumissions web
     }
 
 if __name__ == "__main__":
@@ -116,33 +104,33 @@ if __name__ == "__main__":
     print("🚀 GÉNÉRATEUR D'AVIS CLIENTS - VERSION ÉTENDUE")
     print("=" * 70)
     print(f"\n📊 Configuration:")
-    print(f"   - Kafka: {KAFKA_BOOTSTRAP}")
-    print(f"   - Topic: {TOPIC_NAME}")
+    print(f"   - Kafka: {config.KAFKA_BOOTSTRAP}")
+    print(f"   - Topic: {config.KAFKA_TOPIC}")
     print(f"   - Messages à générer: {NUM_MESSAGES}")
     print(f"   - Période: {DATE_DEBUT.date()} → {DATE_FIN.date()}")
     print(f"   - Produits: {len(PRODUCTS)} différents")
     print(f"   - Templates: {len(TEMPLATES_POSITIF)} positifs, {len(TEMPLATES_NEGATIF)} négatifs, {len(TEMPLATES_NEUTRE)} neutres")
     print("\n" + "=" * 70)
-    
+
     conf = {
-        'bootstrap.servers': KAFKA_BOOTSTRAP,
+        'bootstrap.servers': config.KAFKA_BOOTSTRAP,
         'security.protocol': 'SASL_SSL',
         'sasl.mechanisms': 'PLAIN',
-        'sasl.username': KAFKA_KEY,
-        'sasl.password': KAFKA_SECRET,
+        'sasl.username': config.KAFKA_KEY,
+        'sasl.password': config.KAFKA_SECRET,
         'client.id': 'python-producer-script'
     }
-    
+
     producer = Producer(conf)
-    
+
     print(f"\n📨 Génération et envoi de {NUM_MESSAGES} avis clients...")
     print("⏳ Cela peut prendre 2-3 minutes...\n")
-    
+
     start_time = time.time()
-    
+
     for i in range(NUM_MESSAGES):
         data = generate_dated_feedback()
-        producer.produce(TOPIC_NAME, key=data['user_id'], value=json.dumps(data))
+        producer.produce(config.KAFKA_TOPIC, key=data['user_id'], value=json.dumps(data))
         
         # Flush tous les 100 messages pour éviter de surcharger la mémoire
         if (i + 1) % 100 == 0:

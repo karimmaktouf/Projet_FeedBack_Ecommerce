@@ -1,32 +1,33 @@
 # consumer_indexer.py
+"""
+Consomme les messages Kafka et les indexe dans Qdrant.
+
+Usage: Utilisé uniquement pour indexer les données générées par data_generator.py
+Les soumissions web (source='web_app') sont automatiquement ignorées car déjà indexées
+directement par l'API pour un retour instantané à l'utilisateur.
+"""
 import json
 import time
 from confluent_kafka import Consumer
 from services.qdrant_service import qdrant_service
 from config import config
 
-# Configuration Kafka (même que dans data_generator.py)
-KAFKA_BOOTSTRAP = 'pkc-921jm.us-east-2.aws.confluent.cloud:9092'
-KAFKA_KEY = 'T7W7OZPRNTET7UDB'
-KAFKA_SECRET = 'cflt2cZvShkkU07aKn3IwI5MJZAUDEL4pTY9cA/wBiNYwqQVsXE2kwPxcCiMzTrg'
-TOPIC_NAME = 'customer_feedback'
-
 def consume_and_index(max_messages=100, timeout=30):
     """Consomme les messages Kafka et les indexe dans Qdrant"""
-    
+
     consumer_conf = {
-        'bootstrap.servers': KAFKA_BOOTSTRAP,
+        'bootstrap.servers': config.KAFKA_BOOTSTRAP,
         'security.protocol': 'SASL_SSL',
         'sasl.mechanisms': 'PLAIN',
-        'sasl.username': KAFKA_KEY,
-        'sasl.password': KAFKA_SECRET,
+        'sasl.username': config.KAFKA_KEY,
+        'sasl.password': config.KAFKA_SECRET,
         'group.id': f'feedback-indexer-{config.QDRANT_COLLECTION}',
         'auto.offset.reset': 'earliest',  # Lire depuis le début
         'enable.auto.commit': True
     }
-    
+
     consumer = Consumer(consumer_conf)
-    consumer.subscribe([TOPIC_NAME])
+    consumer.subscribe([config.KAFKA_TOPIC])
     
     print(f"🔄 Consommation de messages depuis Kafka...")
     print(f"📊 Max messages: {max_messages} | Timeout: {timeout}s\n")
@@ -50,7 +51,11 @@ def consume_and_index(max_messages=100, timeout=30):
             try:
                 # Décoder le message
                 data = json.loads(msg.value().decode('utf-8'))
-                
+
+                # Ignorer les messages déjà indexés directement par l'API web
+                if data.get('source') == 'web_app':
+                    continue
+
                 # Transformer au format attendu par qdrant_service
                 feedback_data = {
                     'comment': data.get('text', ''),
@@ -61,10 +66,10 @@ def consume_and_index(max_messages=100, timeout=30):
                     'name': data.get('user_id', 'Anonymous'),
                     'email': f"{data.get('user_id', 'user')}@example.com",
                     'timestamp': data.get('timestamp', ''),
-                    'source': 'kafka',
+                    'source': data.get('source', 'kafka'),
                     'event_id': data.get('event_id', '')
                 }
-                
+
                 # Indexer dans Qdrant
                 success = qdrant_service.index_feedback(feedback_data)
                 
