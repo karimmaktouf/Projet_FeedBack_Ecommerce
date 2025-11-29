@@ -2,7 +2,8 @@ from flask import Blueprint, request, jsonify
 from services.kafka_service import kafka_service
 from services.qdrant_service import qdrant_service
 from services.rag_service import rag_service
-from config import config  # ✅ AJOUT DE L'IMPORT
+from config import config
+from products import PRODUCT_CATEGORIES
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -16,29 +17,18 @@ def submit_feedback():
         required_fields = ['name', 'email', 'product', 'rating', 'comment']
         if not all(field in data for field in required_fields):
             return jsonify({'error': 'Champs manquants'}), 400
-        
-        # Ajouter catégorie
-        PRODUCT_CATEGORIES = {
-            "Smartphone Galaxy X": "Electronics",
-            "Laptop Pro 15": "Electronics",
-            "Casque NoiseCancel": "Electronics",
-            "Montre Connectée": "Electronics",
-            "Télévision 4K": "Electronics",
-            "Console de Jeux": "Electronics",
-            "Chaussures Running": "Fashion",
-            "Jean Vintage": "Fashion",
-            "Machine Espresso": "Home",
-            "Robot Cuisine": "Home"
-        }
+
+        # Ajouter catégorie (depuis products.py centralisé)
         data['category'] = PRODUCT_CATEGORIES.get(data['product'], 'Other')
         
-        # Envoyer vers Kafka
+        # Envoyer vers Kafka (pour archivage/analytics)
         success, result = kafka_service.send_feedback(data)
-        
+
         if not success:
             return jsonify({'error': result}), 500
-        
-        # Indexer immédiatement dans Qdrant
+
+        # Indexer immédiatement dans Qdrant pour retour instantané à l'utilisateur
+        # Note: consumer_indexer.py ignore les messages avec source='web_app' pour éviter la double indexation
         qdrant_service.index_feedback(result)
         
         return jsonify({

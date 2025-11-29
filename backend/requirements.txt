@@ -1,13 +1,15 @@
 Flask==3.0.0
 Flask-CORS==4.0.0
-pip install langchain-core==0.1.52 langchain-huggingface==0.0.6
-
+confluent-kafka==2.3.0
 qdrant-client>=1.9.0
 langchain==0.1.0
+langchain-core==0.1.52
 langchain-groq==0.0.1
 langchain-qdrant==0.1.0
-langchain-huggingface==0.0.1
+langchain-huggingface==0.0.6
+langchain-community==0.0.38
 sentence-transformers==2.2.2
 python-dotenv==1.0.0
 pydantic==2.5.0
 pandas==2.1.0
+faker==20.0.0
