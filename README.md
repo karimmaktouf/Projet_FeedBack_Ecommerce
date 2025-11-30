@@ -1,31 +1,6 @@
 # Projet FeedBack E-commerce
 
 Plateforme full-stack d'analyse de feedback clients pour e-commerce avec IA, utilisant Kafka pour le streaming de données, Qdrant pour la recherche vectorielle, et un système RAG (Retrieval-Augmented Generation) pour l'analyse intelligente.
-
-## 🏗️ Architecture
-
-```
-┌─────────────┐         ┌──────────┐         ┌─────────────┐
-│   React     │────────▶│  Flask   │────────▶│    Kafka    │
-│  Frontend   │         │   API    │         │   Stream    │
-│  (Client +  │         │  + JWT   │         └─────────────┘
-│   Admin)    │         │  Auth    │                 │
-└─────────────┘         └──────────┘                 ▼
-                             │              ┌──────────────┐
-                             ▼              │  Consumer    │
-                        ┌─────────┐         │  Indexer     │
-                        │ Qdrant  │◀────────└──────────────┘
-                        │ Vector  │
-                        │   DB    │
-                        └─────────┘
-                             │
-                             ▼
-                        ┌─────────┐
-                        │  Groq   │
-                        │   LLM   │
-                        └─────────┘
-```
-
 ## 🚀 Fonctionnalités
 
 ### Interface Client
@@ -405,5 +380,6 @@ Ce projet est à usage éducatif.
 ## 📧 Contact
 
 Pour toute question, ouvrez une issue sur GitHub."# Projet_FeedBack_Ecommerce" 
-#   P r o j e t _ F e e d B a c k _ E c o m m e r c e  
+#   P r o j e t _ F e e d B a c k _ E c o m m e r c e 
+ 
  
