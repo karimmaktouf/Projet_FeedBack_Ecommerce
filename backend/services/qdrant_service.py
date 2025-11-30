@@ -186,8 +186,6 @@ class QdrantService:
     def get_stats(self):
         """Récupère les statistiques de la collection"""
         try:
-            info = self.client.get_collection(config.QDRANT_COLLECTION)
-            
             # Récupérer tous les points pour stats
             result = self.client.scroll(
                 collection_name=config.QDRANT_COLLECTION,
@@ -202,9 +200,9 @@ class QdrantService:
             if total == 0:
                 return {
                     'total': 0,
-                    'avg_rating': 0,
-                    'positive_percent': 0,
-                    'negative_percent': 0
+                    'avgRating': 0.0,
+                    'positivePercent': 0.0,
+                    'negativePercent': 0.0
                 }
             
             ratings = [p.payload['metadata']['rating'] for p in points]
@@ -216,18 +214,18 @@ class QdrantService:
             
             return {
                 'total': total,
-                'avg_rating': round(avg_rating, 2),
-                'positive_percent': round((positive_count / total) * 100, 1),
-                'negative_percent': round((negative_count / total) * 100, 1)
+                'avgRating': round(avg_rating, 2),
+                'positivePercent': round((positive_count / total) * 100, 1),
+                'negativePercent': round((negative_count / total) * 100, 1)
             }
         except Exception as e:
-            print(f"Erreur stats: {e}")
+            print(f"❌ Erreur stats: {e}")
+            import traceback
+            traceback.print_exc()
             return {
                 'total': 0,
-                'avg_rating': 0,
-                'positive_percent': 0,
-                'negative_percent': 0
+                'avgRating': 0.0,
+                'positivePercent': 0.0,
+                'negativePercent': 0.0
             }
-
-# Instance globale
 qdrant_service = QdrantService()

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, ChevronDown, Award, Target, Rocket, Activity, Zap, Sparkles } from 'lucide-react';
+import { Send, ChevronDown, Award, Target, Rocket, Activity, Zap, Sparkles, Package } from 'lucide-react';
 import { PRODUCTS } from '../utils/constants';
 
 const ClientFeedbackForm = ({ onSubmit, loading }) => {
@@ -11,15 +11,19 @@ const ClientFeedbackForm = ({ onSubmit, loading }) => {
     comment: ''
   });
 
+  // État pour le champ visuel du numéro de commande (non envoyé)
+  const [orderNumberDisplay, setOrderNumberDisplay] = useState('');
+
   const handleSubmitClick = () => {
     if (!formData.name || !formData.email || !formData.comment) {
-      alert('⚠️ Veuillez remplir tous les champs');
+      alert('⚠️ Veuillez remplir tous les champs obligatoires');
       return;
     }
     if (formData.comment.length < 10) {
       alert('⚠️ Commentaire trop court (minimum 10 caractères)');
       return;
     }
+    // Le numéro de commande n'est PAS envoyé au backend
     onSubmit(formData);
   };
 
@@ -73,31 +77,63 @@ const ClientFeedbackForm = ({ onSubmit, loading }) => {
         </div>
 
         <div className="space-y-6">
+          {/* Section Numéro de commande (optionnel, design uniquement) */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border-2 border-blue-200">
+            <div className="flex items-center mb-4">
+              <Package className="w-5 h-5 mr-2 text-blue-600" />
+              <h4 className="font-bold text-gray-800">📦 Informations de commande</h4>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                Numéro de commande (si vous l'avez)
+              </label>
+              <input
+                type="text"
+                value={orderNumberDisplay}
+                onChange={(e) => setOrderNumberDisplay(e.target.value.toUpperCase())}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all font-mono"
+                placeholder="Ex: CMD-12345"
+                maxLength="20"
+              />
+
+            </div>
+          </div>
+
+          {/* Champs obligatoires */}
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">👤 Votre nom</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                👤 Votre nom <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition-all"
                 placeholder="Ex: Jean Dupont"
+                required
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">📧 Votre email</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                📧 Votre email <span className="text-red-500">*</span>
+              </label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition-all"
                 placeholder="jean@example.com"
+                required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">📦 Produit acheté</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              📦 Produit acheté <span className="text-red-500">*</span>
+            </label>
             <div className="relative">
               <select
                 value={formData.product}
@@ -111,7 +147,9 @@ const ClientFeedbackForm = ({ onSubmit, loading }) => {
           </div>
 
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl border-2 border-amber-200">
-            <label className="block text-sm font-bold text-gray-700 mb-4">⭐ Votre note</label>
+            <label className="block text-sm font-bold text-gray-700 mb-4">
+              ⭐ Votre note <span className="text-red-500">*</span>
+            </label>
             <input
               type="range"
               min="1"
@@ -130,17 +168,27 @@ const ClientFeedbackForm = ({ onSubmit, loading }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">💬 Votre commentaire détaillé</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              💬 Votre commentaire détaillé <span className="text-red-500">*</span>
+            </label>
             <textarea
               value={formData.comment}
               onChange={(e) => setFormData({...formData, comment: e.target.value})}
               rows="6"
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition-all resize-none"
               placeholder="Partagez votre expérience en détail..."
+              required
             />
             <div className="text-right text-xs text-gray-500 mt-1">
               {formData.comment.length} caractères (min. 10)
             </div>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <p className="text-xs text-gray-600 flex items-center">
+              <span className="text-red-500 mr-2">*</span>
+              Champs obligatoires
+            </p>
           </div>
 
           <button

@@ -4,16 +4,23 @@ from services.qdrant_service import qdrant_service
 from services.rag_service import rag_service
 from config import config
 from products import PRODUCT_CATEGORIES
+from api.auth import token_required  # ← Import du décorateur
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
+# ============================================
+# ROUTES PUBLIQUES (Clients)
+# ============================================
+
 @api_bp.route('/feedback', methods=['POST'])
 def submit_feedback():
-    """Soumettre un nouveau feedback"""
+    """
+    Soumettre un nouveau feedback - ROUTE PUBLIQUE
+    """
     try:
         data = request.get_json()
         
-        # Validation basique
+        # Validation basique - CORRIGÉ : name au lieu de orderNumber
         required_fields = ['name', 'email', 'product', 'rating', 'comment']
         if not all(field in data for field in required_fields):
             return jsonify({'error': 'Champs manquants'}), 400
@@ -27,8 +34,7 @@ def submit_feedback():
         if not success:
             return jsonify({'error': result}), 500
 
-        # Indexer immédiatement dans Qdrant pour retour instantané à l'utilisateur
-        # Note: consumer_indexer.py ignore les messages avec source='web_app' pour éviter la double indexation
+        # Indexer immédiatement dans Qdrant
         qdrant_service.index_feedback(result)
         
         return jsonify({
@@ -37,12 +43,27 @@ def submit_feedback():
         }), 201
         
     except Exception as e:
+        print(f"❌ Erreur submit_feedback: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
+@api_bp.route('/health', methods=['GET'])
+def health_check():
+    """Health check - ROUTE PUBLIQUE"""
+    return jsonify({'status': 'ok'}), 200
+
+
+# ============================================
+# ROUTES PROTÉGÉES (Admin uniquement)
+# ============================================
+
 @api_bp.route('/rag/search', methods=['POST'])
+@token_required  # ← Protection admin
 def rag_search():
-    """Recherche RAG"""
+    """
+    Recherche RAG - PROTÉGÉ ADMIN
+    Nécessite un token JWT valide
+    """
     try:
         data = request.get_json()
         query = data.get('query', '')
@@ -55,22 +76,32 @@ def rag_search():
         return jsonify(result), 200
         
     except Exception as e:
+        print(f"❌ Erreur rag_search: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
 @api_bp.route('/analytics', methods=['GET'])
+@token_required  # ← Protection admin
 def get_analytics():
-    """Récupérer les statistiques"""
+    """
+    Récupérer les statistiques - PROTÉGÉ ADMIN
+    Nécessite un token JWT valide
+    """
     try:
         stats = qdrant_service.get_stats()
         return jsonify(stats), 200
     except Exception as e:
+        print(f"❌ Erreur get_analytics: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
 @api_bp.route('/analytics/charts', methods=['GET'])
+@token_required  # ← Protection admin
 def get_chart_data():
-    """Récupère les données pour les graphiques"""
+    """
+    Récupère les données pour les graphiques - PROTÉGÉ ADMIN
+    Nécessite un token JWT valide
+    """
     try:
         # Récupérer tous les points de Qdrant
         result = qdrant_service.client.scroll(
@@ -159,9 +190,3 @@ def get_chart_data():
             'ratings_by_product': [],
             'all_feedbacks': []
         }), 200  # Retourner 200 avec données vides au lieu de 500
-
-
-@api_bp.route('/health', methods=['GET'])
-def health_check():
-    """Health check"""
-    return jsonify({'status': 'ok'}), 200
