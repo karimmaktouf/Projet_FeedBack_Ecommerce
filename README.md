@@ -1,53 +1,108 @@
 # Projet FeedBack E-commerce
 
-Plateforme full-stack d'analyse de feedback clients pour e-commerce avec IA, utilisant Kafka pour le streaming de données, Qdrant pour la recherche vectorielle, et un système RAG (Retrieval-Augmented Generation) pour l'analyse intelligente.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/karimmaktouf/Projet_FeedBack_Ecommerce)](https://github.com/karimmaktouf/Projet_FeedBack_Ecommerce/commits/main)
+[![Stars](https://img.shields.io/github/stars/karimmaktouf/Projet_FeedBack_Ecommerce?style=social)](https://github.com/karimmaktouf/Projet_FeedBack_Ecommerce)
+[![Forks](https://img.shields.io/github/forks/karimmaktouf/Projet_FeedBack_Ecommerce?style=social)](https://github.com/karimmaktouf/Projet_FeedBack_Ecommerce/fork)
 
-## 🚀 Fonctionnalités
+Full-stack e-commerce feedback analysis platform with AI, using Kafka for data streaming, Qdrant for vector search, and RAG (Retrieval-Augmented Generation) for intelligent insights. Built with React, Flask, and modern AI tools.
 
-### Interface Client
-- **Soumission de feedback** : Formulaire moderne et intuitif
-- **Sélection de produits** : Dropdown avec liste complète de produits
-- **Évaluation** : Système de notation interactif (1-5 étoiles)
-- **Commentaires** : Zone de texte pour retours détaillés
-- **Validation en temps réel** : Champs obligatoires avec messages d'erreur
-- **Design moderne** : Interface épurée avec gradients et animations
+Plateforme full-stack d'analyse de feedback clients pour e-commerce avec IA, utilisant Kafka pour le streaming de données, Qdrant pour la recherche vectorielle, et un système RAG (Retrieval-Augmented Generation) pour des insights intelligents. Développée avec React, Flask, et des outils IA modernes.
 
-### Interface Administrateur (🔐 Protégée par JWT)
-- **Authentification sécurisée** : Login avec email/mot de passe
-- **Dashboard Analytics** : Métriques en temps réel
-  - Total d'avis
-  - Note moyenne
-  - Pourcentage positifs/négatifs
-  - Bouton actualiser
-- **Chatbot IA latéral escamotable** 💬
-  - Panel coulissant depuis la droite
-  - Questions suggérées pré-définies
-  - Réponses générées par IA avec sources
-  - Interface compacte et moderne
-- **Analyse de sentiment** : Classification automatique (positif/neutre/négatif)
-- **Recherche RAG** : Questions en langage naturel avec réponses contextuelles
-- **Visualisations interactives** :
-  - Distribution des sentiments (barres de progression)
-  - Notes par produit (top 10)
-  - Distribution des étoiles
-  - Timeline des avis
-  - Top 8 produits
-- **Session persistante** : Token JWT stocké localement
+## Table of Contents
+- [🚀 Features](#-features)
+- [📸 Screenshots](#-screenshots)
+- [🏗️ Architecture](#️-architecture)
+- [📋 Prerequisites](#-prerequisites)
+- [⚙️ Installation](#️-installation)
+- [🔐 Configuration](#-configuration)
+- [🎯 Getting Started](#-getting-started)
+- [📊 Data Flow](#-data-flow)
+- [📁 Project Structure](#-project-structure)
+- [🛠️ Useful Scripts](#️-useful-scripts)
+- [📝 API Endpoints](#-api-endpoints)
+- [🎨 Technologies](#-technologies)
+- [🎭 User Interfaces](#-user-interfaces)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [🔒 Security](#-security)
+- [📄 Changelog](#-changelog)
+- [🚀 Roadmap](#-roadmap)
+- [📄 License](#-license)
+- [👥 Contributors](#-contributors)
+- [📧 Contact](#-contact)
+- [🤝 Contributing](#-contributing)
 
-### Système Backend
-- **Authentification JWT** : Routes admin protégées
-- **Indexation vectorielle** : Recherche sémantique avec Qdrant
-- **Streaming de données** : Pipeline Kafka pour scalabilité
-- **IA générative** : Analyse intelligente avec Groq LLM
-- **Architecture modulaire** : Services découplés (Kafka, Qdrant, RAG, Auth)
+## 🚀 Features
 
-## 📋 Prérequis
+### Client Interface
+- **Feedback Submission**: Modern and intuitive form
+- **Product Selection**: Dropdown with full product list
+- **Rating**: Interactive star rating (1-5 stars)
+- **Comments**: Text area for detailed feedback
+- **Real-time Validation**: Required fields with error messages
+- **Modern Design**: Clean interface with gradients and animations
+
+### Admin Interface (🔐 JWT Protected)
+- **Secure Authentication**: Login with email/password
+- **Analytics Dashboard**: Real-time metrics
+  - Total reviews
+  - Average rating
+  - Positive/negative percentage
+  - Refresh button
+- **Collapsible AI Chatbot** 💬
+  - Sliding panel from the right
+  - Pre-defined suggested questions
+  - AI-generated responses with sources
+  - Compact and modern interface
+- **Sentiment Analysis**: Automatic classification (positive/neutral/negative)
+- **RAG Search**: Natural language questions with contextual answers
+- **Interactive Visualizations**:
+  - Sentiment distribution (progress bars)
+  - Ratings by product (top 10)
+  - Star distribution
+  - Reviews timeline
+  - Top 8 products
+- **Persistent Session**: JWT token stored locally
+
+### Backend System
+- **JWT Authentication**: Protected admin routes
+- **Vector Indexing**: Semantic search with Qdrant
+- **Data Streaming**: Kafka pipeline for scalability
+- **Generative AI**: Intelligent analysis with Groq LLM
+- **Modular Architecture**: Decoupled services (Kafka, Qdrant, RAG, Auth)
+
+## 📸 Screenshots
+
+### Client Feedback Form
+![Client Interface](https://via.placeholder.com/800x400?text=Client+Feedback+Form)  
+*Modern form for submitting e-commerce feedback.*
+
+### Admin Dashboard with AI Chatbot
+![Admin Dashboard](https://via.placeholder.com/800x400?text=Admin+Dashboard+with+Chatbot)  
+*Analytics dashboard featuring real-time metrics and AI-powered chatbot.*
+
+### Sentiment Analysis Visualization
+![Charts](https://via.placeholder.com/800x400?text=Sentiment+Analysis+Charts)  
+*Interactive charts showing feedback distribution.*
+
+*(Replace placeholders with actual screenshots/GIFs from your app for better engagement.)*
+
+## 🏗️ Architecture
+
+The platform leverages AI and modern data tools for scalable feedback analysis:
+- **Frontend**: React for responsive UI.
+- **Backend**: Flask with JWT for secure admin access.
+- **Streaming**: Kafka for real-time data ingestion.
+- **Vector DB**: Qdrant for semantic search.
+- **AI**: Groq LLM with RAG for contextual responses.
+
+## 📋 Prerequisites
 
 - Python 3.9+
 - Node.js 16+
-- Compte Confluent Cloud (Kafka)
-- Compte Qdrant Cloud
-- Clé API Groq
+- Confluent Cloud account (Kafka)
+- Qdrant Cloud account
+- Groq API key
 
 ## ⚙️ Installation
 
@@ -56,16 +111,16 @@ Plateforme full-stack d'analyse de feedback clients pour e-commerce avec IA, uti
 ```bash
 cd backend
 
-# Créer un environnement virtuel
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Sur Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Installer les dépendances
+# Install dependencies
 pip install -r requirements.txt
 
-# Configurer les variables d'environnement
+# Configure environment variables
 cp .env.example .env
-# Éditer .env avec vos credentials
+# Edit .env with your credentials
 ```
 
 ### 2. Frontend (React)
@@ -73,28 +128,28 @@ cp .env.example .env
 ```bash
 cd feedback-ecommerce
 
-# Installer les dépendances
+# Install dependencies
 npm install
 ```
 
 ## 🔐 Configuration (.env)
 
-Créez un fichier `backend/.env` avec :
+Create a `backend/.env` file with:
 
 ```env
 # Kafka Configuration
-KAFKA_BOOTSTRAP=votre-cluster.confluent.cloud:9092
-KAFKA_KEY=votre_api_key
-KAFKA_SECRET=votre_api_secret
+KAFKA_BOOTSTRAP=your-cluster.confluent.cloud:9092
+KAFKA_KEY=your_api_key
+KAFKA_SECRET=your_api_secret
 KAFKA_TOPIC=customer_feedback
 
 # Qdrant Configuration
-QDRANT_URL=https://votre-instance.qdrant.io
-QDRANT_API_KEY=votre_qdrant_key
+QDRANT_URL=https://your-instance.qdrant.io
+QDRANT_API_KEY=your_qdrant_key
 QDRANT_COLLECTION=feedback-db
 
 # Groq API
-GROQ_API_KEY=gsk_votre_clé_groq
+GROQ_API_KEY=gsk_your_groq_key
 
 # Flask
 FLASK_ENV=development
@@ -102,15 +157,15 @@ FLASK_PORT=5000
 
 # Admin Authentication (JWT)
 ADMIN_EMAIL=admin@feedbackpro.com
-ADMIN_PASSWORD=votre_mot_de_passe_securise
-JWT_SECRET=votre_secret_jwt_unique_et_long
+ADMIN_PASSWORD=your_secure_password
+JWT_SECRET=your_unique_and_long_jwt_secret
 ```
 
-⚠️ **IMPORTANT** : Ne commitez JAMAIS le fichier `.env` !
+⚠️ **IMPORTANT**: Never commit the `.env` file!
 
-## 🎯 Démarrage
+## 🎯 Getting Started
 
-### 1. Lancer le backend
+### 1. Start Backend
 
 ```bash
 cd backend
@@ -118,270 +173,265 @@ source venv/bin/activate
 python app.py
 ```
 
-Le backend démarre sur **http://localhost:5000**
+Backend runs on **http://localhost:5000**
 
-### 2. Lancer le frontend
+### 2. Start Frontend
 
 ```bash
 cd feedback-ecommerce
 npm start
 ```
 
-Le frontend démarre sur **http://localhost:3000**
+Frontend runs on **http://localhost:3000**
 
-### 3. Accéder aux interfaces
+### 3. Access Interfaces
 
-- **Interface Client** : http://localhost:3000/ (public)
-- **Interface Admin** : http://localhost:3000/ puis cliquer sur "Administration" (protégé)
-- **Login Admin** : Utiliser les credentials du `.env`
+- **Client Interface**: http://localhost:3000/ (public)
+- **Admin Interface**: http://localhost:3000/ then click "Administration" (protected)
+- **Admin Login**: Use credentials from `.env`
 
-## 📊 Génération de données de test
+## 📊 Data Flow
 
-Pour générer des données de test (2000 avis synthétiques) :
-
-```bash
-cd backend
-python data_generator.py
-```
-
-Puis indexez-les dans Qdrant :
-
-```bash
-python consumer_indexer.py
-```
-
-Vous serez invité à spécifier :
-- Nombre de messages à indexer (ex: 500)
-- Timeout en secondes (ex: 120)
-
-## 🔄 Flux de données
-
-### Soumission via interface client
+### Submission via Client Interface
 ```
 Client → React Form → Flask API → Kafka + Qdrant (direct)
                                     │
-                                    └─→ Confirmation immédiate
+                                    └─→ Immediate Confirmation
 ```
 
-### Consultation via interface admin
+### Consultation via Admin Interface
 ```
 Admin Login → JWT Token → Dashboard React → Flask API (protected)
                                               │
                                               ▼
-                                          Qdrant + RAG → Analyses et insights
+                                          Qdrant + RAG → Analyses and Insights
 ```
 
-### Données générées (batch)
+### Generated Data (Batch)
 ```
 data_generator.py → Kafka → consumer_indexer.py → Qdrant
 ```
 
-**Note** : `consumer_indexer.py` ignore automatiquement les soumissions web (déjà indexées) pour éviter les doublons.
+**Note**: `consumer_indexer.py` automatically ignores web submissions (already indexed) to avoid duplicates.
 
-## 📁 Structure du projet
+## 📁 Project Structure
 
 ```
 Projet_FeedBack-ecommerce/
 ├── backend/
 │   ├── api/
-│   │   ├── routes.py           # Endpoints REST (public + protected)
+│   │   ├── routes.py           # REST Endpoints (public + protected)
 │   │   └── auth.py             # JWT Authentication & middleware
 │   ├── services/
-│   │   ├── kafka_service.py    # Gestion Kafka
-│   │   ├── qdrant_service.py   # Indexation vectorielle
-│   │   └── rag_service.py      # Système RAG avec Groq
-│   ├── products.py             # Liste centralisée des produits
+│   │   ├── kafka_service.py    # Kafka Management
+│   │   ├── qdrant_service.py   # Vector Indexing
+│   │   └── rag_service.py      # RAG System with Groq
+│   ├── products.py             # Centralized Product List
 │   ├── config.py               # Configuration
-│   ├── app.py                  # Application Flask + CORS
-│   ├── data_generator.py       # Générateur de données test
-│   ├── consumer_indexer.py     # Indexation batch Kafka→Qdrant
-│   └── requirements.txt        # Dépendances Python
+│   ├── app.py                  # Flask App + CORS
+│   ├── data_generator.py       # Test Data Generator
+│   ├── consumer_indexer.py     # Batch Indexing Kafka→Qdrant
+│   └── requirements.txt        # Python Dependencies
 │
 └── feedback-ecommerce/
     ├── src/
     │   ├── components/
-    │   │   ├── ClientFeedbackForm.jsx    # Interface client
-    │   │   ├── AdminDashboard.jsx        # Dashboard + Chatbot IA
-    │   │   ├── AdminLogin.jsx            # Écran de connexion admin
-    │   │   ├── ModernCharts.jsx          # Graphiques simplifiés
-    │   │   └── MetricCard.jsx            # Cartes métriques
+    │   │   ├── ClientFeedbackForm.jsx    # Client Interface
+    │   │   ├── AdminDashboard.jsx        # Dashboard + AI Chatbot
+    │   │   ├── AdminLogin.jsx            # Admin Login Screen
+    │   │   ├── ModernCharts.jsx          # Simplified Charts
+    │   │   └── MetricCard.jsx            # Metric Cards
     │   ├── utils/
-    │   │   ├── api.js                    # API service avec JWT interceptor
-    │   │   └── constants.js              # Constantes (produits, URL API)
-    │   └── App.js                        # Routage avec auth state
+    │   │   ├── api.js                    # API Service with JWT Interceptor
+    │   │   └── constants.js              # Constants (products, API URLs)
+    │   └── App.js                        # Routing with Auth State
     └── package.json
 ```
 
-## 🛠️ Scripts utiles
+## 🛠️ Useful Scripts
 
 ### Backend
 
 ```bash
-# Réinitialiser la collection Qdrant
+# Reset Qdrant collection
 python reset_db.py
 
-# Migrer des données existantes
+# Migrate existing data
 python migrate_data.py
 
-# Générer 2000 avis clients
+# Generate 2000 customer reviews
 python data_generator.py
 
-# Indexer les messages Kafka dans Qdrant
+# Index Kafka messages into Qdrant
 python consumer_indexer.py
 ```
 
 ### Frontend
 
 ```bash
-# Démarrer en mode développement
+# Start in development mode
 npm start
 
-# Build de production
+# Production build
 npm run build
 
-# Lancer les tests
+# Run tests
 npm test
 ```
 
 ## 📝 API Endpoints
 
-| Méthode | Endpoint | Protection | Description |
-|---------|----------|------------|-------------|
-| **POST** | `/api/feedback` | ❌ Public | Soumettre un feedback |
+| Method | Endpoint | Protection | Description |
+|--------|----------|------------|-------------|
+| **POST** | `/api/feedback` | ❌ Public | Submit feedback |
 | **GET** | `/api/health` | ❌ Public | Health check |
-| **POST** | `/api/admin/login` | ❌ Public | Connexion admin |
-| **GET** | `/api/admin/verify` | ✅ JWT | Vérifier token |
-| **POST** | `/api/rag/search` | ✅ JWT | Recherche RAG |
-| **GET** | `/api/analytics` | ✅ JWT | Statistiques globales |
-| **GET** | `/api/analytics/charts` | ✅ JWT | Données graphiques |
+| **POST** | `/api/admin/login` | ❌ Public | Admin login |
+| **GET** | `/api/admin/verify` | ✅ JWT | Verify token |
+| **POST** | `/api/rag/search` | ✅ JWT | RAG Search |
+| **GET** | `/api/analytics` | ✅ JWT | Global Statistics |
+| **GET** | `/api/analytics/charts` | ✅ JWT | Chart Data |
 
-### Authentification JWT
+### JWT Authentication
 
-Les routes protégées nécessitent un header :
+Protected routes require a header:
 ```
-Authorization: Bearer <votre_token_jwt>
+Authorization: Bearer <your_jwt_token>
 ```
 
-## 🎨 Technologies utilisées
+## 🎨 Technologies
 
 ### Backend
-- **Flask** : Framework web Python
-- **Flask-CORS** : Gestion CORS
-- **PyJWT** : Authentification JWT
-- **Kafka (Confluent)** : Streaming de données
-- **Qdrant** : Base de données vectorielle
-- **LangChain** : Framework RAG
-- **Groq** : LLM (Llama 3.3 70B)
-- **HuggingFace** : Embeddings (all-MiniLM-L6-v2)
+- **Flask**: Python web framework
+- **Flask-CORS**: CORS handling
+- **PyJWT**: JWT Authentication
+- **Kafka (Confluent)**: Data streaming
+- **Qdrant**: Vector database
+- **LangChain**: RAG framework
+- **Groq**: LLM (Llama 3.3 70B)
+- **HuggingFace**: Embeddings (all-MiniLM-L6-v2)
 
 ### Frontend
-- **React 19** : Framework UI
-- **React Router** : Routage
-- **Tailwind CSS** : Styling moderne
-- **Axios** : HTTP client avec interceptors
-- **Lucide React** : Icônes
-- **LocalStorage** : Persistance du token JWT
+- **React 19**: UI framework
+- **React Router**: Routing
+- **Tailwind CSS**: Modern styling
+- **Axios**: HTTP client with interceptors
+- **Lucide React**: Icons
+- **LocalStorage**: JWT token persistence
 
-## 🎭 Interfaces utilisateur
+## 🎭 User Interfaces
 
-### Interface Client
-- Design épuré et moderne
-- Formulaire responsive
-- Validation en temps réel
-- Animations fluides
-- Confirmation de soumission
+### Client Interface
+- Clean and modern design
+- Responsive form
+- Real-time validation
+- Smooth animations
+- Submission confirmation
 
-### Interface Administrateur
-- **Authentification sécurisée** avec JWT
-- **Dashboard complet** avec métriques clés :
-  - Total d'avis
-  - Note moyenne (camelCase fix)
-  - % Positifs/Négatifs
-  - Bouton actualiser
-- **Chatbot IA latéral escamotable** :
-  - S'ouvre depuis la droite (450px)
-  - Questions suggérées
-  - Réponses avec sources
-  - Animation fluide
-  - Overlay semi-transparent
-- **Graphiques simplifiés** :
-  - Barres de progression (au lieu de pie charts complexes)
-  - Design minimaliste
-  - Pas d'icônes artificielles
-- **Session persistante** : Reconnexion automatique
+### Admin Interface
+- **Secure Authentication** with JWT
+- **Complete Dashboard** with key metrics:
+  - Total reviews
+  - Average rating (camelCase fix)
+  - Positive/Negative %
+  - Refresh button
+- **Collapsible AI Chatbot**:
+  - Opens from the right (450px)
+  - Suggested questions
+  - Responses with sources
+  - Smooth animation
+  - Semi-transparent overlay
+- **Simplified Charts**:
+  - Progress bars (instead of complex pie charts)
+  - Minimalist design
+  - No artificial icons
+- **Persistent Session**: Auto-relogin
 
-## 🐛 Résolution de problèmes
+## 🐛 Troubleshooting
 
-### Le backend ne démarre pas
-- Vérifiez que le fichier `.env` existe et contient toutes les variables
-- Vérifiez que l'environnement virtuel est activé
-- Installez toutes les dépendances : `pip install -r requirements.txt`
+### Backend Won't Start
+- Check that `.env` file exists and has all variables
+- Ensure virtual environment is activated
+- Install all dependencies: `pip install -r requirements.txt`
 
-### Erreur "undefined" dans les stats
-✅ **Corrigé** : Les clés sont maintenant en camelCase (`avgRating`, `positivePercent`)
+### "undefined" Error in Stats
+✅ **Fixed**: Keys are now in camelCase (`avgRating`, `positivePercent`)
 
-### Erreur 401 sur `/analytics/charts`
-✅ **Corrigé** : Le token JWT est maintenant envoyé dans tous les appels protégés
+### 401 Error on `/analytics/charts`
+✅ **Fixed**: JWT token is now sent in all protected calls
 
-### Erreur d'import circulaire
-✅ **Corrigé** : La méthode `get_stats()` est dans `qdrant_service.py`, pas dans `routes.py`
+### Circular Import Error
+✅ **Fixed**: `get_stats()` method is in `qdrant_service.py`, not `routes.py`
 
-### Le chatbot ne s'affiche pas
-- Cliquez sur le bouton flottant violet en bas à droite
-- Le panel s'ouvre depuis la droite avec animation
+### Chatbot Not Displaying
+- Click the floating purple button at bottom-right
+- Panel opens from the right with animation
 
-### Problèmes Git (rebase)
+### Git Issues (Rebase)
 ```bash
-# Annuler le rebase
+# Abort rebase
 git rebase --abort
 
-# Ajouter les modifications
+# Add changes
 git add .
 git commit -m "feat: Add JWT auth and collapsible chatbot"
 
-# Pusher
+# Push
 git push origin main --force
 ```
 
-## 🔒 Sécurité
+## 🔒 Security
 
-- ✅ **JWT Authentication** : Routes admin protégées
-- ✅ **Token expiration** : 24h par défaut
-- ✅ **CORS configuré** : Uniquement localhost:3000/3001
-- ✅ **Variables sensibles** : Dans `.env` (non commité)
-- ✅ **Validation des inputs** : Champs requis vérifiés
-- ⚠️ **Production** : Changez `JWT_SECRET` et utilisez HTTPS
+- ✅ **JWT Authentication**: Protected admin routes
+- ✅ **Token Expiration**: 24h default
+- ✅ **CORS Configured**: Only localhost:3000/3001
+- ✅ **Sensitive Variables**: In `.env` (not committed)
+- ✅ **Input Validation**: Required fields checked
+- ⚠️ **Production**: Change `JWT_SECRET` and use HTTPS
 
 ## 📄 Changelog
 
-### Version 2.0 (Dernière)
-- ✅ Ajout authentification JWT pour admin
-- ✅ Chatbot IA latéral escamotable
-- ✅ Correction des clés stats (camelCase)
-- ✅ Design épuré et professionnel
-- ✅ Graphiques simplifiés (barres de progression)
-- ✅ Session persistante avec localStorage
-- ✅ Correction token JWT dans fetchChartData
-- ✅ Suppression du champ "Numéro de commande"
+### Version 2.0 (Latest)
+- ✅ Added JWT authentication for admin
+- ✅ Collapsible AI chatbot
+- ✅ Fixed stats keys (camelCase)
+- ✅ Clean and professional design
+- ✅ Simplified charts (progress bars)
+- ✅ Persistent session with localStorage
+- ✅ Fixed JWT token in fetchChartData
+- ✅ Removed "Order Number" field
 
 ### Version 1.0
-- Interface client/admin de base
-- Intégration Kafka + Qdrant + Groq
-- Système RAG fonctionnel
+- Basic client/admin interface
+- Kafka + Qdrant + Groq integration
+- Functional RAG system
 
-## 📄 Licence
+## 🚀 Roadmap
 
-Ce projet est à usage éducatif.
+- [ ] Add multi-language support (English/French toggle)
+- [ ] Integrate real e-commerce APIs (e.g., Shopify)
+- [ ] Implement user accounts for clients
+- [ ] Add advanced AI models for deeper sentiment analysis
+- [ ] Create a live demo on Heroku/Vercel
+- [ ] Add unit and integration tests
+- [ ] Optimize performance for large datasets
 
-## 👥 Contributeurs
+## 📄 License
 
-- **Khalfallah Marwa** (Khalfallah2023)
-- **Karim Maktouf** (karimmaktouf)
+This project is for educational use. Licensed under MIT.
+
+## 👥 Contributors
+
+- **Khalfallah Marwa** ([@Khalfallah2023](https://github.com/Khalfallah2023))
+- **Karim Maktouf** ([@karimmaktouf](https://github.com/karimmaktouf))
 
 ## 📧 Contact
 
-Pour toute question, ouvrez une issue sur GitHub."# Projet_FeedBack_Ecommerce" 
-#   P r o j e t _ F e e d B a c k _ E c o m m e r c e 
- 
- 
+For questions, open an issue on GitHub or email: karim.maktouf@example.com
 
+## 🤝 Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+- Fork the repo
+- Create a feature branch
+- Submit a pull request
+- Report issues or suggest features
